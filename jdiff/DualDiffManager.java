@@ -146,6 +146,9 @@ public class DualDiffManager {
             if ( splitConfig != null ) {
                 validateConfig( view, splitConfig );
                 view.setSplitConfig( null, splitConfig );
+                if (view.getSplitPane() != null) {
+                    view.getSplitPane().setResizeWeight(0.5);
+                }
             }
             else {
                 view.unsplit();
@@ -223,7 +226,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                view.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -250,7 +253,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                view.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -278,7 +281,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                view.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -305,7 +308,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                view.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -332,7 +335,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                view.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -359,7 +362,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                view.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -374,7 +377,7 @@ public class DualDiffManager {
         DualDiff dualDiff = DualDiffManager.getDualDiffFor( editPane.getView() );
         if ( dualDiff == null ) {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
             return ;
         }
@@ -387,7 +390,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -402,7 +405,7 @@ public class DualDiffManager {
         DualDiff dualDiff = DualDiffManager.getDualDiffFor( editPane.getView() );
         if ( dualDiff == null ) {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
             return ;
         }
@@ -415,7 +418,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -430,7 +433,7 @@ public class DualDiffManager {
         DualDiff dualDiff = DualDiffManager.getDualDiffFor( editPane.getView() );
         if ( dualDiff == null ) {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
             return ;
         }
@@ -443,7 +446,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -458,7 +461,7 @@ public class DualDiffManager {
         DualDiff dualDiff = DualDiffManager.getDualDiffFor( editPane.getView() );
         if ( dualDiff == null ) {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
             return ;
         }
@@ -471,7 +474,7 @@ public class DualDiffManager {
         }
         else {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
         }
     }
@@ -486,7 +489,7 @@ public class DualDiffManager {
         DualDiff dualDiff = DualDiffManager.getDualDiffFor( editPane.getView() );
         if ( dualDiff == null ) {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
             return ;
         }
@@ -502,7 +505,7 @@ public class DualDiffManager {
         }
         DualDiff dualDiff = DualDiffManager.getDualDiffFor( editPane.getView() );
         if ( dualDiff == null ) {
-            editPane.getToolkit().beep();
+            UIManager.getLookAndFeel().provideErrorFeedback(null);
             return ;
         }
         dualDiff.moveLeft( editPane );
@@ -518,7 +521,7 @@ public class DualDiffManager {
         DualDiff dualDiff = DualDiffManager.getDualDiffFor( editPane.getView() );
         if ( dualDiff == null ) {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                editPane.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
             return ;
         }
@@ -534,7 +537,7 @@ public class DualDiffManager {
         }
         DualDiff dualDiff = DualDiffManager.getDualDiffFor( editPane.getView() );
         if ( dualDiff == null ) {
-            editPane.getToolkit().beep();
+            UIManager.getLookAndFeel().provideErrorFeedback(null);
             return ;
         }
         dualDiff.moveMultipleLeft( editPane );
@@ -549,7 +552,7 @@ public class DualDiffManager {
     public static void diffNormalOutput( View view ) {
         if ( !DualDiffManager.isEnabledFor( view ) ) {
             if ( jEdit.getBooleanProperty( BEEP_ON_ERROR ) ) {
-                view.getToolkit().beep();
+                UIManager.getLookAndFeel().provideErrorFeedback(null);
             }
             return ;
         }
@@ -584,26 +587,20 @@ public class DualDiffManager {
             Log.log( Log.DEBUG, DualDiff.class, ioe );
         }
 
-        // Get/create the output view and create a new buffer
-        View outputView = jEdit.getFirstView();
-        for ( ; outputView != null; outputView = outputView.getNext() ) {
-            if ( !DualDiffManager.isEnabledFor( outputView ) ) {
-                break;
-            }
-        }
-        if ( outputView == null ) {
-            outputView = jEdit.newView( view, view.getBuffer() );
-        }
-        Buffer outputBuffer = jEdit.newFile( outputView );
+        // create a plain view and create a new buffer
+        DualDiffManager.toggleOffFor(view);
+        Buffer outputBuffer = jEdit.newFile( view );
 
         // Insert the normal output into the buffer
         String s = sw.toString();
+        outputBuffer.writeLock();
         outputBuffer.insert( 0, s );
         // When the string ends with a newline, the generated buffer
         // adds one extra newline so we remove it
         if ( s.endsWith( "\n" ) && outputBuffer.getLength() > 0 ) {
             outputBuffer.remove( outputBuffer.getLength() - 1, 1 );
         }
+        outputBuffer.writeUnlock();
     }
 
     /**

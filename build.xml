@@ -81,8 +81,9 @@
                 nowarn="off"
                 destdir="${classes.dir}"
                 srcdir="${src.dir}"
-                target="1.5"
-                source="1.5">
+                target="${compiler.target}"
+                source="${compiler.source}"
+                includeAntRuntime="false">
             <classpath refid="classpathref" />
             <compilerarg value="-Xlint:unchecked"/>
         </javac>
@@ -176,6 +177,7 @@
         <copy todir="${config.dir}">
             <fileset dir="${basedir}">
                 <include name="JDiffPlugin.props"/>
+                <include name="lang_*.properties"/>
                 <include name="dockables.xml"/>
                 <include name="actions.xml"/>
                 <include name="dockables.xml"/>
