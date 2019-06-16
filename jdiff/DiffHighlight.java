@@ -82,13 +82,14 @@ public class DiffHighlight extends TextAreaExtension {
                             if ( hunk.first0 != physicalLine ) {
                                 continue;
                             }
-                            color = JDiffPlugin.overviewInvalidColor;
+              // funa edit
+              color = JDiffPlugin.highlightInvalidColor;
                             gfx.setColor( color );
                             gfx.drawLine( 0, y, painter.getWidth() - 1, height );
                             continue;
                         }
-
-                        color = hunk.lines1 == 0 ? JDiffPlugin.overviewDeletedColor : JDiffPlugin.overviewChangedColor;
+            // funa edit
+            color = hunk.lines1 == 0 ? JDiffPlugin.highlightDeletedColor : JDiffPlugin.highlightChangedColor;
                         gfx.setColor( color );
                         gfx.fillRect( 0, y, painter.getWidth(), height );
                         break;
@@ -104,13 +105,14 @@ public class DiffHighlight extends TextAreaExtension {
                             if ( hunk.first1 != physicalLine ) {
                                 continue;
                             }
-                            color = JDiffPlugin.overviewInvalidColor;
+              // funa edit
+              color = JDiffPlugin.highlightInvalidColor;
                             gfx.setColor( color );
                             gfx.drawLine( 0, y, painter.getWidth() - 1, height );
                             continue;
                         }
-
-                        color = hunk.lines0 == 0 ? JDiffPlugin.overviewInsertedColor :JDiffPlugin.overviewChangedColor;
+            // funa edit
+            color = hunk.lines0 == 0 ? JDiffPlugin.highlightInsertedColor :JDiffPlugin.highlightChangedColor;
                         gfx.setColor( color );
                         gfx.fillRect( 0, y, painter.getWidth(), height );
                         break;
@@ -191,7 +193,9 @@ public class DiffHighlight extends TextAreaExtension {
             return ;
         }
 
-        int first = this.textArea.getFirstLine();
+      // Funa edit
+      int first = this.textArea.getFirstPhysicalLine();
+      // int first = this.textArea.getFirstLine();
         int last = first + this.textArea.getVisibleLines();
         this.textArea.invalidateLineRange( first, last );
     }

@@ -67,20 +67,26 @@ public abstract class DiffOverview extends JComponent {
         }
         Diff.Change hunk = edits;
 
-        int leftFirstLine = textArea0.getFirstLine();
+    // funa edit
+    // int leftFirstLine = textArea0.getFirstLine();
+    int leftFirstLine = textArea0.getFirstPhysicalLine();
         int rightFirstLine = textArea1.getFirstLine();
         int rightMaxFirstLine = textArea1.getLineCount() - textArea1.getVisibleLines() + 1;
 
         if ( hunk == null ) {
             // no diffs, so scroll to same line number
-            textArea1.setFirstLine( Math.min( leftFirstLine, rightMaxFirstLine ) );
+      // Funa edit
+      goToLine(textArea1, Math.min( leftFirstLine, rightMaxFirstLine ));
+      // textArea1.setFirstLine( Math.min( leftFirstLine, rightMaxFirstLine ) );
             return ;
         }
 
         for ( ; hunk != null; hunk = hunk.next ) {
             // if before first hunk, scroll line per line
             if ( leftFirstLine < hunk.first0 && hunk.prev == null ) {
-                textArea1.setFirstLine( leftFirstLine );
+        // Funa edit
+        goToLine(textArea1, leftFirstLine);
+        // textArea1.setFirstLine( leftFirstLine );
                 return ;
             }
 
@@ -125,21 +131,27 @@ public abstract class DiffOverview extends JComponent {
                 else {
                     return;   
                 }
-                textArea1.setFirstLine( hunk.first1 + distance );
+        // Funa edit
+        goToLine(textArea1, hunk.first1 + distance);
+        // textArea1.setFirstLine( hunk.first1 + distance );
                 return ;
             }
 
             // if between hunks, scroll line per line
             if ( leftFirstLine > hunk.last0 && ( hunk.next != null && leftFirstLine < hunk.next.first0 ) ) {
                 int distance = leftFirstLine - hunk.last0;
-                textArea1.setFirstLine( hunk.last1 + distance );
+        // Funa edit
+        goToLine(textArea1, hunk.last1 + distance );
+        // textArea1.setFirstLine( hunk.last1 + distance );
                 return ;
             }
 
             // if after last hunk scroll line per line
             if ( leftFirstLine > hunk.last0 && hunk.next == null ) {
                 int distance = leftFirstLine - hunk.last0;
-                textArea1.setFirstLine( hunk.last1 + distance );
+        // Funa edit
+        goToLine(textArea1, hunk.last1 + distance );
+        // textArea1.setFirstLine( hunk.last1 + distance );
                 return ;
             }
         }
@@ -153,12 +165,16 @@ public abstract class DiffOverview extends JComponent {
         Diff.Change hunk = edits;
 
         int leftFirstLine = textArea0.getFirstLine();
-        int rightFirstLine = textArea1.getFirstLine();
+    // Funa edit
+    int rightFirstLine = textArea1.getFirstPhysicalLine();
+    // int rightFirstLine = textArea1.getFirstLine();
         int leftMaxFirstLine = textArea0.getLineCount() - textArea0.getVisibleLines() + 1;
 
         if ( hunk == null ) {
             // no diffs, so scroll to same line number
-            textArea0.setFirstLine( Math.min( rightFirstLine, leftMaxFirstLine ) );
+      // Funa edit
+      goToLine(textArea0, Math.min( rightFirstLine, leftMaxFirstLine ));
+      // textArea0.setFirstLine( Math.min( rightFirstLine, leftMaxFirstLine ) );
             return ;
         }
 
@@ -166,7 +182,9 @@ public abstract class DiffOverview extends JComponent {
         for ( ; hunk != null; hunk = hunk.next ) {
             // if before first hunk, scroll line per line
             if ( rightFirstLine < hunk.first1 && hunk.prev == null ) {
-                textArea0.setFirstLine( rightFirstLine );
+        // Funa edit
+        goToLine(textArea0, rightFirstLine);
+        // textArea0.setFirstLine( rightFirstLine );
                 return ;
             }
 
@@ -211,26 +229,55 @@ public abstract class DiffOverview extends JComponent {
                 else {
                     return;   
                 }
-                textArea0.setFirstLine( hunk.first0 + distance );
+        // Funa edit
+        goToLine(textArea0, hunk.first0 + distance);
+        // textArea0.setFirstLine( hunk.first0 + distance );
                 return ;
             }
 
             // if between hunks, scroll line per line
             if ( rightFirstLine > hunk.last1 && ( hunk.next != null && rightFirstLine < hunk.next.first1 ) ) {
                 int distance = rightFirstLine - hunk.last1;
-                textArea0.setFirstLine( hunk.last0 + distance );
+        // Funa edit
+        goToLine(textArea0, hunk.last0 + distance);
+        // textArea0.setFirstLine( hunk.last0 + distance );
                 return ;
             }
 
             // if after last hunk, scroll line per line
             if ( rightFirstLine > hunk.last1 && hunk.next == null ) {
                 int distance = rightFirstLine - hunk.last1;
-                textArea0.setFirstLine( hunk.last0 + distance );
+        // Funa edit
+        goToLine(textArea0, hunk.last0 + distance);
+        // textArea0.setFirstLine( hunk.last0 + distance );
                 return ;
             }
         }
     }
 
+  // funa edit
+  void goToLine(JEditTextArea textArea, int line) {
+    if (jEdit.getActiveView().getTextArea().equals(textArea)){
+      return ;
+    }
+    // int now = textArea.getLineOfOffset(textArea.getCaretPosition());
+    int start = line;
+    if (start < 0)
+      start = 0;
+    if (start >= textArea.getLineCount())
+      start = textArea.getLineCount() - 1;
+    // int last = start +  textArea.getVisibleLines();
+    // if (now < start || now > last)
+    // textArea.setCaretPosition(textArea.getLineStartOffset(start));
+    // // this.textArea0.setFirstLine(leftFirstLine);
+    textArea.setFirstPhysicalLine(start);
+    if (!(textArea.getWidth() == 0 && textArea.getHeight() == 0 && textArea.getX() == 0 && textArea.getY() == 0)) {
+      int offset = textArea.getScreenLineStartOffset(textArea.getVisibleLines() / 2);
+      if (offset != -1)
+        textArea.centerCaret();
+    }
+  }
+  
     /**
      * Default implementation does nothing, this is for subclasses to override.
      */

@@ -40,6 +40,11 @@ public class BasicDiffGlobalPhysicalOverviewUI extends DiffGlobalPhysicalOvervie
     private Rectangle leftRectangle;
     private Rectangle rightRectangle;
 
+  // Funa edit
+  private Image offImage = null;
+  private Graphics offGfx = null;
+  
+  
     public static ComponentUI createUI( JComponent c ) {
         return new BasicDiffGlobalPhysicalOverviewUI();
     }
@@ -92,9 +97,31 @@ public class BasicDiffGlobalPhysicalOverviewUI extends DiffGlobalPhysicalOvervie
             setPreferredSize( dim );
         }
 
-        public void paintComponent( Graphics gfx ) {
-            super.paintComponent( gfx );
+    // Funa edit
+    private boolean createImage(  ) {
+      if ( isVisible(  ) ) {
+        if ( 
+          offGfx == null ||
+        ( getWidth(  ) != offImage.getWidth( null ) || getHeight(  ) != offImage.getHeight( null ) )
+        ) {
+        if (offImage != null){
+          // System.out.println("flush ####################");
+          offImage.flush();
+        }
+        offImage = createImage( getWidth(  ), getHeight(  ) );
+        offGfx = offImage.getGraphics(  );
+        paintOffImage( offGfx );
+        // System.out.println( "paint ####################" );
+        } else {
+          // System.out.println( "not paint ####################" ); 
+        }
 
+      }
+      return offGfx != null;
+    }
+    
+    // Funa edit
+    private void paintOffImage( Graphics gfx ) {
             DiffTextAreaModel model = diffGlobalPhysicalOverview.getModel();
             if ( model == null ) {
                 return ;
@@ -136,7 +163,9 @@ public class BasicDiffGlobalPhysicalOverviewUI extends DiffGlobalPhysicalOvervie
             gfx.drawRect( left.x - 1, left.y - 1, left.width + 1, left.height + 1 );
             gfx.drawRect( right.x - 1, right.y - 1, right.width + 1, right.height + 1 );
 
-            gfx.setColor( jEdit.getColorProperty("view.bgColor", Color.WHITE) );
+      // funa edit
+      // gfx.setColor( jEdit.getColorProperty("view.bgColor", Color.WHITE) );
+      gfx.setColor( Color.WHITE );
             gfx.fillRect( left.x, left.y, left.width, left.height );
             gfx.fillRect( right.x, right.y, right.width, right.height );
 
@@ -172,12 +201,30 @@ public class BasicDiffGlobalPhysicalOverviewUI extends DiffGlobalPhysicalOvervie
 
                 gfx.setColor( Color.black );
                 gfx.drawLine( left.x + left.width + 1, left.y, right.x - 1, right.y );
+      }
+    }
 
+    // Funa Edit
+    public void paintComponent( Graphics gfx ) {
+      super.paintComponent( gfx );
+      
+      DiffTextAreaModel model = diffGlobalPhysicalOverview.getModel();
+      if ( model == null ) {
+        return ;
+      }
+      
+      if ( createImage(  ) == false ){
+        // System.out.println( "can not createImage####################" );
+        return;
+      }
+      
+      gfx.drawImage( offImage,0,0,this );
                 // Display the textArea cursor
                 this.paintCursor( gfx, model );
             }
-        }
 
+    
+    
         public void paintCursor( Graphics gfx, DiffTextAreaModel model ) {
             int leftLineCount = model.getLeftLineCount();
             int rightLineCount = model.getRightLineCount();

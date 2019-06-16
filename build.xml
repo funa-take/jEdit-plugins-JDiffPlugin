@@ -6,8 +6,8 @@
     <property file="build.properties"/>
     <property file="JDiffPlugin.props" />
     <!-- default location of jedit.jar -->
-    <property name="jedit.install.dir" value="../.."/>
-    <property name="jedit.plugins.dir" value="${install.dir}" />
+    <!-- <property name="jedit.install.dir" value="../.."/>
+    <property name="jedit.plugins.dir" value="${install.dir}" /> -->
 
 
     <!-- jar name -->
@@ -17,19 +17,19 @@
     <property name="build.num" value="${plugin.jdiff.JDiffPlugin.version}"/>
 
     <!-- where to put the finished plugin -->
-    <property name="install.dir" value=".." />
+    <!-- <property name="install.dir" value=".." /> -->
 
     <!-- source code directory, this is where the .java files live -->
-    <property name="src.dir" location="." />
-    <mkdir dir="${src.dir}"/>
+    <!-- <property name="src.dir" location="." />
+    <mkdir dir="${src.dir}"/> -->
 
     <!-- library directory, location for third party jars -->
     <property name="lib.dir" location="lib"/>
     <mkdir dir="${lib.dir}"/>
 
     <!-- temporary directory for post-compile processing -->
-    <property name="build.dir" location="build"/>
-    <mkdir dir="${build.dir}"/>
+    <!-- <property name="build.dir" location="build"/>
+    <mkdir dir="${build.dir}"/> -->
 
     <!-- configuration directory, this is where the configuration files for the
       plugin are placed for additional processing prior to getting jarred. -->
@@ -78,6 +78,7 @@
             depends="init,setClasspath">
         <javac deprecation="on"
                 debug="on"
+                encoding="UTF-8"
                 nowarn="off"
                 destdir="${classes.dir}"
                 srcdir="${src.dir}"
