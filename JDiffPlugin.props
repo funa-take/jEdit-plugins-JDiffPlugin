@@ -32,9 +32,11 @@ plugin.jdiff.JDiffPlugin.menu=\
     jdiff.diff-normal-output \
     jdiff.apply-patch
 
+# funa edit
 plugin.jdiff.JDiffPlugin.option-group=jdiff.general \
     jdiff.gui \
-    jdiff.overview
+    jdiff.overview \
+    jdiff.highlight
 
 # titles for DockableWindowManager
 jdiff-lines.title=Diff
@@ -81,6 +83,14 @@ jdiff.overview-invalid-color=\#CCCCCC
 jdiff.left-cursor-color=\#000000
 jdiff.right-cursor-color=\#000000
 
+# funa edit
+jdiff.highlight-changed-color=\#FFFF90
+jdiff.highlight-deleted-color=\#FF9090
+jdiff.highlight-inserted-color=\#D9FF90
+jdiff.highlight-invalid-color=\#909090
+
+
+
 # Option panes titles
 options.jdiff.general.code=new jdiff.options.JDiffOptionPane();
 options.jdiff.general.label=Diff Settings
@@ -88,6 +98,11 @@ options.jdiff.gui.code=new jdiff.options.JDiffGUIOptionPane();
 options.jdiff.gui.label=GUI Settings
 options.jdiff.overview.code=new jdiff.options.JDiffOverviewOptionPane();
 options.jdiff.overview.label=Colors
+# funa edit
+options.jdiff.overview.label=Overview colors
+options.jdiff.highlight.code=new jdiff.options.JDiffHighlightOptionPane();
+options.jdiff.highlight.label=Highlight colors
+
 
 options.jdiff.diff-options.label=Diff options:
 options.jdiff.ignore-case=Ignore case

@@ -159,7 +159,8 @@ public class DualDiffManager {
                 List<Integer> values = carets.get( ep.getBuffer().getPath( false ) );
                 if ( values != null ) {
                     TextArea textArea = ep.getTextArea();
-                    int max_caret = textArea.getBufferLength() - 1;
+                    // funa edit
+                    int max_caret = Math.max(textArea.getBufferLength() - 1,0);
                     int caret_position = Math.min(values.get( 0 ), max_caret);
                     int max_line = textArea.getLineCount() - 1;
                     int first_physical_line = Math.min(values.get( 1 ), max_line);
