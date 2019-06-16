@@ -257,7 +257,7 @@ public abstract class DiffOverview extends JComponent {
 
   // funa edit
   void goToLine(JEditTextArea textArea, int line) {
-    if (jEdit.getActiveView().getTextArea().equals(textArea)){
+    if (dualDiff.getView().getTextArea().equals(textArea)){
       return ;
     }
     // int now = textArea.getLineOfOffset(textArea.getCaretPosition());
