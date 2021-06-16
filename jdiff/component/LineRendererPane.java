@@ -175,6 +175,10 @@ public class LineRendererPane extends JComponent implements EBComponent, CaretLi
     public void caretUpdate( final CaretEvent e ) {
         if ( e.getSource() instanceof JEditTextArea ) {
             JEditTextArea source = ( JEditTextArea ) e.getSource();
+            // カーソルが移動したTextAreaがアクティブじゃない場合(スクロールバーの同期で移動した場合)は何もしない
+            if (!source.getView().getTextArea().equals(source)) {
+              return;
+            }
             runner.setSource( source );
             SwingUtilities.invokeLater( runner );
         }
