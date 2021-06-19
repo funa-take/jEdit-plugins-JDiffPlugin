@@ -130,32 +130,40 @@ public class BasicLineRendererPaneUI extends DiffLineOverviewUI implements Chang
   
   public void stateChanged( ChangeEvent event ) {
     // paint lines or clear, depends on the view and the model.
-    lineRenderer.repaint();
-    if ( lineRendererPane.getModel() != null ) {
-      // auto scroll so first diff is visible
-      String leftLine = lineRendererPane.getModel().getLeftLine();
-      String rightLine = lineRendererPane.getModel().getRightLine();
-      String longLine = leftLine.length() > rightLine.length() ? leftLine : rightLine;
-      String shortLine = leftLine.length() <= rightLine.length() ? leftLine : rightLine;
-      int offset = shortLine.length();
-      for ( int i = 0; i < shortLine.length(); i++ ) {
-        if ( shortLine.charAt( i ) != longLine.charAt( i ) ) {
-          offset = i;
-          break;
-        }
-      }
-      int max_length = longLine.length();
-      float percent = ( float ) offset / ( float ) max_length;
-      JScrollBar sb = scrollPane.getHorizontalScrollBar();
-      int center = scrollPane.getViewport().getViewRect().width / 2;
-      // final int vp_offset = ( int ) ( ( float ) scrollPane.getViewport().getViewRect().width * percent );
-      int vp_offset = ( int ) ( ( float ) sb.getMaximum() * percent );
-      // Point p = scrollPane.getViewport().getViewPosition();
-      vp_offset -= center;
-      // p.x = vp_offset;
-      // scrollPane.getViewport().setViewPosition( p );
-      sb.setValue(vp_offset);
+    lineRenderer.calcSize();
+    lineRenderer.revalidate();
+    // lineRenderer.repaint();
+    
+    if ( lineRendererPane.getModel() == null ) {
+      return;
     }
+    SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+          // auto scroll so first diff is visible
+          String leftLine = lineRendererPane.getModel().getLeftLine();
+          String rightLine = lineRendererPane.getModel().getRightLine();
+          String longLine = leftLine.length() > rightLine.length() ? leftLine : rightLine;
+          String shortLine = leftLine.length() <= rightLine.length() ? leftLine : rightLine;
+          int offset = shortLine.length();
+          for ( int i = 0; i < shortLine.length(); i++ ) {
+            if ( shortLine.charAt( i ) != longLine.charAt( i ) ) {
+              offset = i;
+              break;
+            }
+          }
+          int max_length = longLine.length();
+          float percent = ( float ) offset / ( float ) max_length;
+          JScrollBar sb = scrollPane.getHorizontalScrollBar();
+          int center = scrollPane.getViewport().getViewRect().width / 2;
+          // final int vp_offset = ( int ) ( ( float ) scrollPane.getViewport().getViewRect().width * percent );
+          int vp_offset = ( int ) ( ( float ) sb.getMaximum() * percent );
+          // Point p = scrollPane.getViewport().getViewPosition();
+          vp_offset -= center;
+          // p.x = vp_offset;
+          // scrollPane.getViewport().setViewPosition( p );
+          sb.setValue(vp_offset);
+        }
+    });
   }
   
   /**
@@ -199,6 +207,29 @@ public class BasicLineRendererPaneUI extends DiffLineOverviewUI implements Chang
         return false;
       }
       return lineRendererPane.getView().getEditPanes().length == 2;
+    }
+    
+    public void calcSize() {
+      model = lineRendererPane.getModel();
+      if ( model == null ) {
+        return ;
+      }
+      
+      if ( !isSplit() ) {
+        return ;
+      }
+      String leftLine = model.getLeftLine();
+      String rightLine = model.getRightLine();
+      
+      Font font = lineRendererPane.getFont();
+      FontMetrics fm = lineRendererPane.getFontMetrics(font);
+      preferredHeight = 8 * fm.getHeight();
+      
+      int left_width = fm.stringWidth( leftLine );
+      preferredWidth = Math.max( minimumSize.width, leftMargin + left_width + leftMargin );
+      
+      int right_width = fm.stringWidth( rightLine );
+      preferredWidth = Math.max( preferredWidth, leftMargin + right_width + leftMargin );
     }
     
     public void paintComponent( Graphics gfx ) {
@@ -306,7 +337,6 @@ public class BasicLineRendererPaneUI extends DiffLineOverviewUI implements Chang
       gfx.drawLine( x + right_width, y, x + right_width, y - tick_height );
       preferredWidth = Math.max( preferredWidth, x + right_width + leftMargin );
       
-      this.revalidate();
       // scrollPane.revalidate();
     }
   }
