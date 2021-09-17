@@ -136,7 +136,7 @@ public class BasicLineRendererPaneUI extends LineRendererPaneUI implements Chang
     // paint lines or clear, depends on the view and the model.
     lineRenderer.calcSize();
     lineRenderer.revalidate();
-    // lineRenderer.repaint();
+    lineRenderer.repaint();
     
     if ( lineRendererPane.getModel() == null ) {
       return;
