@@ -37,11 +37,12 @@ import org.gjt.sp.jedit.EBMessage;
 import org.gjt.sp.jedit.EditBus;
 import org.gjt.sp.jedit.View;
 import org.gjt.sp.jedit.msg.*;
+import org.gjt.sp.jedit.gui.*;
 
 /**
  * Component to show the merge controls and line differences.
  */
-public class DiffLineOverview extends JComponent implements LineProcessor, EBComponent {
+public class DiffLineOverview extends JComponent implements LineProcessor, EBComponent, DefaultFocusComponent {
 
     private static final String uiClassID = "DiffLineOverviewUI";
 
@@ -51,6 +52,11 @@ public class DiffLineOverview extends JComponent implements LineProcessor, EBCom
 
     private Set<ChangeListener> changeListeners = new HashSet<ChangeListener>();
 
+    public void focusOnDefaultComponent() {
+    if (getUI() instanceof BasicDiffLineOverviewUI) {
+      ((BasicDiffLineOverviewUI)getUI()).requestFocus();
+    }
+  }
     /**
      * @param dualDiff the DualDiff this component is to control.
      */

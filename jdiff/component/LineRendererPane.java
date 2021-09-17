@@ -53,6 +53,11 @@ public class LineRendererPane extends JComponent implements EBComponent, CaretLi
 
     private Set<ChangeListener> changeListeners = new HashSet<ChangeListener>();
 
+   public void requestFocus() {
+     if (getUI() instanceof BasicLineRendererPaneUI) {
+       ((BasicLineRendererPaneUI)getUI()).requestFocus();
+     }
+   }
     /**
      * @param view the parent frame
      */
@@ -68,17 +73,18 @@ public class LineRendererPane extends JComponent implements EBComponent, CaretLi
     public void setUI( LineRendererPaneUI ui ) {
         super.setUI( ui );
     }
-
+    
     public void updateUI() {
         if ( UIManager.get( getUIClassID() ) != null ) {
             setUI( ( LineRendererPaneUI ) UIManager.getUI( this ) );
         }
         else {
-            setUI( new BasicLineRendererPaneUI() );
+          test = new BasicLineRendererPaneUI();
+            setUI( test );
         }
         fireStateChanged();
     }
-
+    BasicLineRendererPaneUI test;
     public LineRendererPaneUI getUI() {
         return ( LineRendererPaneUI ) ui;
     }
