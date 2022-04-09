@@ -55,7 +55,7 @@ public class DualDiffUtil {
         // caretLocation will be (X,Y) relative to the current view area
         Point caretLocation = ta.offsetToXY( caretPhysLine, caretRelOffset );
         // to scroll the caret to the left, we need to add caretLocation.x to the horizontalOffset
-        ta.setHorizontalOffset( -1 * ( Math.abs( ta.getHorizontalOffset() ) + caretLocation.x ) );
+        ta.setHorizontalOffset( -1 * ( Math.abs( ta.getHorizontalOffset() ) + caretLocation.x - (ta.getPainter().getWidth() / 2)) );
     }
 
     /**
