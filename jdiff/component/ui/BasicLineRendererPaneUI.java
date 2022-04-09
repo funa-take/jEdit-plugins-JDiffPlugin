@@ -28,7 +28,7 @@ import javax.swing.plaf.ComponentUI;
 import org.gjt.sp.jedit.jEdit;
 import jdiff.component.*;
 
-public class BasicLineRendererPaneUI extends DiffLineOverviewUI implements ChangeListener {
+public class BasicLineRendererPaneUI extends LineRendererPaneUI implements ChangeListener {
   
   private LineRendererPane lineRendererPane = null;
   private JScrollPane scrollPane = null;
@@ -43,6 +43,10 @@ public class BasicLineRendererPaneUI extends DiffLineOverviewUI implements Chang
    */
   public static ComponentUI createUI( JComponent c ) {
     return new BasicLineRendererPaneUI();
+  }
+  
+  public void requestFocus() {
+    scrollPane.requestFocus();
   }
   
   /**
