@@ -20,6 +20,7 @@ public class ScrollHandler implements ScrollListener, FocusListener, MouseListen
     private Runnable syncWithLeftVert;
     private Runnable syncWithRightHoriz;
     private Runnable syncWithLeftHoriz;
+    private Boolean skipEvent = false;
 
     public ScrollHandler( DualDiff parent ) {
         if ( parent == null ) {
@@ -57,23 +58,51 @@ public class ScrollHandler implements ScrollListener, FocusListener, MouseListen
                 };
 
     }
+    
+    private boolean enableSkipEvent() {
+      synchronized (skipEvent) {
+        if (skipEvent)
+          return false;
+        
+        skipEvent = true;
+        return true;
+      }
+    }
+    
+    public void disableSkipEvent() {
+      SwingUtilities.invokeLater( new Runnable() {
+          public void run() {
+            synchronized (skipEvent) {
+              skipEvent = false; 
+            }
+          }
+      });
+    }
 
     public void scrolledHorizontally( TextArea textArea ) {
+        if (!enableSkipEvent()) return;
+        
         if ( textArea == parent.getTextArea0() ) {
             SwingUtilities.invokeLater( syncWithRightHoriz );
         }
         else if ( textArea == parent.getTextArea1() ) {
             SwingUtilities.invokeLater( syncWithLeftHoriz );
         }
+        
+        disableSkipEvent();
     }
 
     public void scrolledVertically( TextArea textArea ) {
+        if (!enableSkipEvent()) return;
+        
         if ( textArea == parent.getTextArea0() ) {
             SwingUtilities.invokeLater( syncWithRightVert );
         }
         else if ( textArea == parent.getTextArea1() ) {
             SwingUtilities.invokeLater( syncWithLeftVert );
         }
+        
+        disableSkipEvent();
     }
 
     public void focusGained( FocusEvent e ) {
